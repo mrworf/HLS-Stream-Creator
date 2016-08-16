@@ -126,6 +126,7 @@ if $TWOPASS; then
 	PASSVAR="-passlogfile \"$LOGFILE\" -pass 2"
 
 	$FFMPEG -i "$infile" \
+		-map 0:a -map -0:v \
 		-pass 1 \
 		-passlogfile "$LOGFILE" \
 		-an \
@@ -139,11 +140,11 @@ fi
 
 $FFMPEG -i "$infile" \
     $PASSVAR \
+    -map 0:a -map -0:v \
     -loglevel verbose -y \
     -vcodec "$VIDEO_CODEC" \
     -acodec "$AUDIO_CODEC" \
     -threads "$NUMTHREADS" \
-    -map 0 \
     -flags \
     -global_header \
     -f segment \
