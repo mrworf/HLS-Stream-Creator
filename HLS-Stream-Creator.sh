@@ -145,12 +145,9 @@ $FFMPEG -i "$infile" \
     -vcodec "$VIDEO_CODEC" \
     -acodec "$AUDIO_CODEC" \
     -threads "$NUMTHREADS" \
-    -flags \
-    -global_header \
-    -f segment \
-    -segment_list "$playlist_name" \
-    -segment_time "$SEGLENGTH" \
-    -segment_format mpeg_ts \
+    -f hls \
+    -hls_time "$SEGLENGTH" \
+    -hls_list_size 0 \
     $bitrate \
     $FFMPEG_ADDITIONAL \
     $FFMPEG_FLAGS \
@@ -388,7 +385,7 @@ then
 	      fi
 	      echo "Bitrate options: $BITRATE"
 	      # Finally, lets build the output filename format
-	      OUT_NAME="${SEGMENT_PREFIX}_${br}_%05d.ts"
+	      OUT_NAME="${SEGMENT_PREFIX}_${br}.m3u8"
 	      PLAYLIST_NAME="$OUTPUT_DIRECTORY/${PLAYLIST_PREFIX}_${br}.m3u8"
 	      SOURCE_FILE="$INPUTFILE"
 	      echo "Generating HLS segments for bitrate ${br}k - this may take some time"
